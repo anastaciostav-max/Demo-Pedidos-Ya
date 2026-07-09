@@ -1,7 +1,7 @@
 import { Bell, Info, Palette, Store } from 'lucide-react-native';
 import React, { useState } from 'react';
 import { Switch, View } from 'react-native';
-import { AppText, Button, Card, Input, Logo, ScreenContainer, ScreenHeader } from '@/components/ui';
+import { AppText, Badge, Button, Card, Input, Logo, ScreenContainer, ScreenHeader } from '@/components/ui';
 import { useBusinessStore } from '@/stores/useBusinessStore';
 import { palette, spacing } from '@/theme';
 
@@ -71,11 +71,12 @@ export default function ConfiguracionScreen() {
         <Palette size={18} color={palette.blue600} />
         <AppText variant="headline">Apariencia</AppText>
       </View>
-      <Card style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-        <AppText variant="body">Tema</AppText>
-        <AppText variant="bodySemibold" color={palette.blue600}>
-          Claro
-        </AppText>
+      <Card style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.sm }}>
+        <View style={{ flex: 1 }}>
+          <AppText variant="body">Tema</AppText>
+          <AppText variant="caption">Modo oscuro llega en una próxima actualización.</AppText>
+        </View>
+        <Badge label="Próximamente" fg={palette.gray600} bg={palette.gray100} />
       </Card>
 
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.sm, marginTop: spacing.xl, marginBottom: spacing.md }}>
