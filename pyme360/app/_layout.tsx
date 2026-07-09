@@ -8,7 +8,7 @@ import {
 } from '@expo-google-fonts/inter';
 import { Stack, useRouter, useSegments } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -56,7 +56,17 @@ export default function RootLayout() {
     Inter_800ExtraBold,
   });
   const dataReady = useAppReady();
-  const ready = fontsLoaded && dataReady;
+  const [minTimeElapsed, setMinTimeElapsed] = useState(false);
+
+  // On a fast connection everything can be ready in well under a frame, which
+  // makes the loading screen flash invisibly. Force it to stay up briefly so
+  // the logo + "Cargando…" is always perceptible.
+  useEffect(() => {
+    const timer = setTimeout(() => setMinTimeElapsed(true), 700);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const ready = fontsLoaded && dataReady && minTimeElapsed;
 
   useAuthGate(ready);
 
