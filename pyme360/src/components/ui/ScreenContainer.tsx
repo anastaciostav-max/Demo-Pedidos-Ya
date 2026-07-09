@@ -10,6 +10,8 @@ interface ScreenContainerProps {
   contentStyle?: ViewStyle;
   onRefresh?: () => void | Promise<void>;
   refreshing?: boolean;
+  /** Rendered as an absolutely-positioned sibling outside the scroll area (e.g. a FAB). */
+  floating?: React.ReactNode;
 }
 
 export function ScreenContainer({
@@ -19,24 +21,28 @@ export function ScreenContainer({
   contentStyle,
   onRefresh,
   refreshing,
+  floating,
 }: ScreenContainerProps) {
   return (
     <SafeAreaView style={styles.safe} edges={edges}>
-      {scroll ? (
-        <ScrollView
-          contentContainerStyle={[styles.content, contentStyle]}
-          showsVerticalScrollIndicator={false}
-          refreshControl={
-            onRefresh ? (
-              <RefreshControl refreshing={!!refreshing} onRefresh={onRefresh} tintColor={palette.blue600} />
-            ) : undefined
-          }
-        >
-          {children}
-        </ScrollView>
-      ) : (
-        <View style={[styles.content, { flex: 1 }, contentStyle]}>{children}</View>
-      )}
+      <View style={styles.body}>
+        {scroll ? (
+          <ScrollView
+            contentContainerStyle={[styles.content, contentStyle]}
+            showsVerticalScrollIndicator={false}
+            refreshControl={
+              onRefresh ? (
+                <RefreshControl refreshing={!!refreshing} onRefresh={onRefresh} tintColor={palette.blue600} />
+              ) : undefined
+            }
+          >
+            {children}
+          </ScrollView>
+        ) : (
+          <View style={[styles.content, { flex: 1 }, contentStyle]}>{children}</View>
+        )}
+        {floating}
+      </View>
     </SafeAreaView>
   );
 }
@@ -45,6 +51,9 @@ const styles = StyleSheet.create({
   safe: {
     flex: 1,
     backgroundColor: palette.gray50,
+  },
+  body: {
+    flex: 1,
   },
   content: {
     paddingHorizontal: spacing.lg,

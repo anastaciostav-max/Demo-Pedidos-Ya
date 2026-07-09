@@ -42,7 +42,7 @@ export default function ProductosScreen() {
   }, [products, query, categoryFilter]);
 
   return (
-    <ScreenContainer scroll={false} contentStyle={{ flex: 1 }}>
+    <ScreenContainer floating={<FAB onPress={() => router.push('/productos/nuevo')} />}>
       <ScreenHeader title="Productos" subtitle={`${products.length} en catálogo`} />
       <View style={{ paddingHorizontal: spacing.lg, gap: spacing.sm }}>
         <SearchBar value={query} onChangeText={setQuery} placeholder="Buscar por nombre, SKU o código..." />
@@ -58,7 +58,7 @@ export default function ProductosScreen() {
           onAction={() => router.push('/productos/nuevo')}
         />
       ) : (
-        <View style={{ flex: 1, paddingHorizontal: spacing.lg, marginTop: spacing.sm }}>
+        <View style={{ paddingHorizontal: spacing.lg, marginTop: spacing.sm }}>
           {filtered.map((p) => {
             const lowStock = p.stock <= p.minStock;
             const margin = p.salePrice > 0 ? ((p.salePrice - p.purchasePrice) / p.salePrice) * 100 : 0;
@@ -95,8 +95,6 @@ export default function ProductosScreen() {
           })}
         </View>
       )}
-
-      <FAB onPress={() => router.push('/productos/nuevo')} />
     </ScreenContainer>
   );
 }

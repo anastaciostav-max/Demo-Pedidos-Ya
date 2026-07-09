@@ -1,7 +1,8 @@
 import { useRouter } from 'expo-router';
 import { ChevronDown, Package, Plus, Trash2, User } from 'lucide-react-native';
 import React, { useState } from 'react';
-import { Alert, Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { notify } from '@/lib/confirm';
 import { ClientPickerSheet } from '@/components/domain/ClientPickerSheet';
 import { ProductPickerSheet } from '@/components/domain/ProductPickerSheet';
 import { AppText, Button, Card, IconButton, Input, ScreenContainer, ScreenHeader } from '@/components/ui';
@@ -34,7 +35,7 @@ export default function NuevoPedidoScreen() {
   }
 
   function handleSubmit() {
-    if (items.length === 0) return Alert.alert('Agrega al menos un producto');
+    if (items.length === 0) return notify('Agrega al menos un producto');
     const order = addOrder({
       clientId: client?.id,
       clientName: client?.name ?? 'Público General',

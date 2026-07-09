@@ -1,7 +1,8 @@
 import { useLocalSearchParams } from 'expo-router';
 import { CircleCheck, FileDown, MessageCircle } from 'lucide-react-native';
 import React, { useState } from 'react';
-import { Alert, Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { notify } from '@/lib/confirm';
 import { AppText, Badge, Card, Divider, ScreenContainer, ScreenHeader } from '@/components/ui';
 import { formatCurrency, formatDateTime } from '@/lib/format';
 import { buildSaleReceiptHtml, shareHtmlAsPdf } from '@/lib/pdf';
@@ -37,7 +38,7 @@ export default function VentaDetailScreen() {
       const html = buildSaleReceiptHtml(sale!, business);
       await shareHtmlAsPdf(html, `Venta ${sale!.folio}`);
     } catch (e) {
-      Alert.alert('No se pudo generar el PDF', 'Intenta nuevamente.');
+      notify('No se pudo generar el PDF', 'Intenta nuevamente.');
     } finally {
       setSharing(false);
     }

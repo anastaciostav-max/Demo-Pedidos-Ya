@@ -12,8 +12,9 @@ import {
   Users,
 } from 'lucide-react-native';
 import React from 'react';
-import { Alert, Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { AppText, Avatar, Card, ScreenContainer } from '@/components/ui';
+import { confirmAction } from '@/lib/confirm';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { palette, radius, spacing } from '@/theme';
 
@@ -67,10 +68,9 @@ export default function MasScreen() {
 
       <Pressable
         onPress={() =>
-          Alert.alert('Cerrar sesión', '¿Seguro que deseas salir?', [
-            { text: 'Cancelar', style: 'cancel' },
-            { text: 'Cerrar sesión', style: 'destructive', onPress: logout },
-          ])
+          confirmAction('Cerrar sesión', '¿Seguro que deseas salir?', 'Cerrar sesión', logout, {
+            destructive: true,
+          })
         }
         style={styles.logout}
       >

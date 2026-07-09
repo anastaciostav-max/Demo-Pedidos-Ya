@@ -1,7 +1,8 @@
 import { useRouter } from 'expo-router';
 import { ChevronDown, Package } from 'lucide-react-native';
 import React, { useState } from 'react';
-import { Alert, Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { notify } from '@/lib/confirm';
 import { ProductPickerSheet } from '@/components/domain/ProductPickerSheet';
 import { AppText, Button, Card, Input, ScreenContainer, ScreenHeader } from '@/components/ui';
 import { useInventoryStore } from '@/stores/useInventoryStore';
@@ -18,8 +19,8 @@ export default function AjusteScreen() {
 
   function handleSubmit() {
     const value = parseInt(newStock, 10);
-    if (!product) return Alert.alert('Selecciona un producto');
-    if (Number.isNaN(value) || value < 0) return Alert.alert('Ingresa un valor de stock válido');
+    if (!product) return notify('Selecciona un producto');
+    if (Number.isNaN(value) || value < 0) return notify('Ingresa un valor de stock válido');
     registerAjuste(product.id, value, note.trim() || undefined);
     router.back();
   }

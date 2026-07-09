@@ -1,7 +1,8 @@
 import { useRouter } from 'expo-router';
 import { ChevronDown, Package, Plus, Trash2 } from 'lucide-react-native';
 import React, { useState } from 'react';
-import { Alert, Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { notify } from '@/lib/confirm';
 import { ProductPickerSheet } from '@/components/domain/ProductPickerSheet';
 import { SupplierPickerSheet } from '@/components/domain/SupplierPickerSheet';
 import { AppText, Button, Card, IconButton, Input, ScreenContainer, ScreenHeader } from '@/components/ui';
@@ -34,8 +35,8 @@ export default function NuevaCompraScreen() {
   }
 
   function handleSubmit() {
-    if (!supplier) return Alert.alert('Selecciona un proveedor');
-    if (items.length === 0) return Alert.alert('Agrega al menos un producto');
+    if (!supplier) return notify('Selecciona un proveedor');
+    if (items.length === 0) return notify('Agrega al menos un producto');
     addPurchase({ supplierId: supplier.id, supplierName: supplier.name, items });
     router.back();
   }

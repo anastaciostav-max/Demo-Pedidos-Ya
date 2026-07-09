@@ -1,8 +1,9 @@
 import { useLocalSearchParams } from 'expo-router';
 import { Ban, Check, MapPin } from 'lucide-react-native';
 import React from 'react';
-import { Alert, Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { AppText, Badge, Button, Card, Divider, ScreenContainer, ScreenHeader, StatusPill } from '@/components/ui';
+import { confirmAction } from '@/lib/confirm';
 import { formatCurrency, formatDateTime } from '@/lib/format';
 import { useBusinessStore } from '@/stores/useBusinessStore';
 import { ORDER_STATUS_FLOW, ORDER_STATUS_LABELS, useOrderStore } from '@/stores/useOrderStore';
@@ -130,10 +131,13 @@ export default function PedidoDetailScreen() {
         <Pressable
           style={{ marginTop: spacing.sm, alignItems: 'center', flexDirection: 'row', justifyContent: 'center', gap: 6 }}
           onPress={() =>
-            Alert.alert('Cancelar pedido', '¿Deseas cancelar este pedido?', [
-              { text: 'No', style: 'cancel' },
-              { text: 'Sí, cancelar', style: 'destructive', onPress: () => setStatus(order.id, 'cancelado') },
-            ])
+            confirmAction(
+              'Cancelar pedido',
+              '¿Deseas cancelar este pedido?',
+              'Sí, cancelar',
+              () => setStatus(order.id, 'cancelado'),
+              { destructive: true },
+            )
           }
         >
           <Ban size={16} color={palette.danger} />

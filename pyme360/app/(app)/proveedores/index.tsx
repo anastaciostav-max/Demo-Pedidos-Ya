@@ -17,7 +17,7 @@ export default function ProveedoresScreen() {
   );
 
   return (
-    <ScreenContainer scroll={false} contentStyle={{ flex: 1 }}>
+    <ScreenContainer floating={<FAB onPress={() => router.push('/proveedores/nuevo')} />}>
       <ScreenHeader title="Proveedores" subtitle={`${suppliers.length} registrados`} />
       <View style={{ paddingHorizontal: spacing.lg }}>
         <SearchBar value={query} onChangeText={setQuery} placeholder="Buscar proveedor..." />
@@ -32,7 +32,7 @@ export default function ProveedoresScreen() {
           onAction={() => router.push('/proveedores/nuevo')}
         />
       ) : (
-        <View style={{ flex: 1, paddingHorizontal: spacing.lg, marginTop: spacing.sm }}>
+        <View style={{ paddingHorizontal: spacing.lg, marginTop: spacing.sm }}>
           {filtered.map((s) => (
             <Pressable key={s.id} onPress={() => router.push(`/proveedores/${s.id}`)}>
               <Card style={{ flexDirection: 'row', alignItems: 'center', marginBottom: spacing.sm, gap: spacing.sm }}>
@@ -50,8 +50,6 @@ export default function ProveedoresScreen() {
           ))}
         </View>
       )}
-
-      <FAB onPress={() => router.push('/proveedores/nuevo')} />
     </ScreenContainer>
   );
 }

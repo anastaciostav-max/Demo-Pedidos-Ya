@@ -32,7 +32,7 @@ export default function VentasScreen() {
     .reduce((s, sale) => s + sale.total, 0);
 
   return (
-    <ScreenContainer scroll={false} contentStyle={{ flex: 1 }}>
+    <ScreenContainer floating={<FAB onPress={() => router.push('/ventas/nueva')} />}>
       <View style={{ paddingTop: spacing.md, paddingHorizontal: spacing.lg }}>
         <AppText variant="title">Ventas</AppText>
         <AppText variant="caption" style={{ marginTop: 2, marginBottom: spacing.sm }}>
@@ -50,7 +50,7 @@ export default function VentasScreen() {
           onAction={() => router.push('/ventas/nueva')}
         />
       ) : (
-        <View style={{ flex: 1, paddingHorizontal: spacing.lg, marginTop: spacing.sm }}>
+        <View style={{ paddingHorizontal: spacing.lg, marginTop: spacing.sm }}>
           {sorted.slice(0, 60).map((sale) => (
             <Pressable key={sale.id} onPress={() => router.push(`/ventas/${sale.id}`)}>
               <Card style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: spacing.sm }}>
@@ -69,8 +69,6 @@ export default function VentasScreen() {
           ))}
         </View>
       )}
-
-      <FAB onPress={() => router.push('/ventas/nueva')} />
     </ScreenContainer>
   );
 }

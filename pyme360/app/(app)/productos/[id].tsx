@@ -1,9 +1,10 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { History, Trash2 } from 'lucide-react-native';
 import React, { useState } from 'react';
-import { Alert, View } from 'react-native';
+import { View } from 'react-native';
 import { ProductForm } from '@/components/domain/ProductForm';
 import { AppText, Button, IconButton, ScreenContainer, ScreenHeader } from '@/components/ui';
+import { confirmAction } from '@/lib/confirm';
 import { useProductStore } from '@/stores/useProductStore';
 import { palette, spacing } from '@/theme';
 
@@ -36,17 +37,16 @@ export default function ProductoDetailScreen() {
             </IconButton>
             <IconButton
               onPress={() =>
-                Alert.alert('Eliminar producto', `¿Eliminar "${product.name}" del catálogo?`, [
-                  { text: 'Cancelar', style: 'cancel' },
-                  {
-                    text: 'Eliminar',
-                    style: 'destructive',
-                    onPress: () => {
-                      removeProduct(product.id);
-                      router.back();
-                    },
+                confirmAction(
+                  'Eliminar producto',
+                  `¿Eliminar "${product.name}" del catálogo?`,
+                  'Eliminar',
+                  () => {
+                    removeProduct(product.id);
+                    router.back();
                   },
-                ])
+                  { destructive: true },
+                )
               }
             >
               <Trash2 size={18} color={palette.danger} />

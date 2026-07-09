@@ -32,7 +32,7 @@ export default function ClientesScreen() {
   );
 
   return (
-    <ScreenContainer scroll={false} contentStyle={{ flex: 1 }}>
+    <ScreenContainer floating={<FAB onPress={() => router.push('/clientes/nuevo')} />}>
       <ScreenHeader title="Clientes" subtitle={`${clients.length} registrados`} />
       <View style={{ paddingHorizontal: spacing.lg }}>
         <SearchBar value={query} onChangeText={setQuery} placeholder="Buscar cliente..." />
@@ -47,7 +47,7 @@ export default function ClientesScreen() {
           onAction={() => router.push('/clientes/nuevo')}
         />
       ) : (
-        <View style={{ flex: 1, paddingHorizontal: spacing.lg, marginTop: spacing.sm }}>
+        <View style={{ paddingHorizontal: spacing.lg, marginTop: spacing.sm }}>
           {filtered.map((c) => (
             <Pressable key={c.id} onPress={() => router.push(`/clientes/${c.id}`)}>
               <Card style={{ flexDirection: 'row', alignItems: 'center', marginBottom: spacing.sm, gap: spacing.sm }}>
@@ -68,8 +68,6 @@ export default function ClientesScreen() {
           ))}
         </View>
       )}
-
-      <FAB onPress={() => router.push('/clientes/nuevo')} />
     </ScreenContainer>
   );
 }

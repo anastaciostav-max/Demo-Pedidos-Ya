@@ -1,6 +1,7 @@
 import { FileDown, FileSpreadsheet } from 'lucide-react-native';
 import React, { useMemo, useState } from 'react';
-import { Alert, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { notify } from '@/lib/confirm';
 import { BarTrend } from '@/components/charts/BarTrend';
 import { AppText, Button, Card, ScreenContainer, ScreenHeader, SegmentedControl } from '@/components/ui';
 import {
@@ -75,7 +76,7 @@ export default function ReportesScreen() {
       });
       await shareHtmlAsPdf(html, 'Reporte Pyme360');
     } catch {
-      Alert.alert('No se pudo generar el PDF');
+      notify('No se pudo generar el PDF');
     } finally {
       setExporting(null);
     }
@@ -90,7 +91,7 @@ export default function ReportesScreen() {
       );
       await shareCsv(csv, `ventas_pyme360_${period}.csv`);
     } catch {
-      Alert.alert('No se pudo generar el archivo');
+      notify('No se pudo generar el archivo');
     } finally {
       setExporting(null);
     }

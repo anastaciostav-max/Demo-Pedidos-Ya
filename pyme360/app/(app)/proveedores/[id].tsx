@@ -1,9 +1,10 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Trash2 } from 'lucide-react-native';
 import React, { useMemo, useState } from 'react';
-import { Alert, Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { SupplierForm } from '@/components/domain/SupplierForm';
 import { AppText, Avatar, Card, Divider, IconButton, ScreenContainer, ScreenHeader } from '@/components/ui';
+import { confirmAction } from '@/lib/confirm';
 import { formatCurrency, formatDate } from '@/lib/format';
 import { useBusinessStore } from '@/stores/useBusinessStore';
 import { usePurchaseStore } from '@/stores/usePurchaseStore';
@@ -42,10 +43,16 @@ export default function ProveedorDetailScreen() {
         right={
           <IconButton
             onPress={() =>
-              Alert.alert('Eliminar proveedor', `¿Eliminar a "${supplier.name}"?`, [
-                { text: 'Cancelar', style: 'cancel' },
-                { text: 'Eliminar', style: 'destructive', onPress: () => { removeSupplier(supplier.id); router.back(); } },
-              ])
+              confirmAction(
+                'Eliminar proveedor',
+                `¿Eliminar a "${supplier.name}"?`,
+                'Eliminar',
+                () => {
+                  removeSupplier(supplier.id);
+                  router.back();
+                },
+                { destructive: true },
+              )
             }
           >
             <Trash2 size={18} color={palette.danger} />

@@ -31,7 +31,7 @@ export default function PedidosScreen() {
   }, [orders, filter]);
 
   return (
-    <ScreenContainer scroll={false} contentStyle={{ flex: 1 }}>
+    <ScreenContainer floating={<FAB onPress={() => router.push('/pedidos/nuevo')} />}>
       <View style={{ paddingTop: spacing.md, paddingHorizontal: spacing.lg }}>
         <AppText variant="title" style={{ marginBottom: spacing.sm }}>
           Pedidos
@@ -48,7 +48,7 @@ export default function PedidosScreen() {
           onAction={() => router.push('/pedidos/nuevo')}
         />
       ) : (
-        <View style={{ flex: 1, paddingHorizontal: spacing.lg, marginTop: spacing.sm }}>
+        <View style={{ paddingHorizontal: spacing.lg, marginTop: spacing.sm }}>
           {filtered.map((o) => (
             <Pressable key={o.id} onPress={() => router.push(`/pedidos/${o.id}`)}>
               <Card style={{ marginBottom: spacing.sm }}>
@@ -72,8 +72,6 @@ export default function PedidosScreen() {
           ))}
         </View>
       )}
-
-      <FAB onPress={() => router.push('/pedidos/nuevo')} />
     </ScreenContainer>
   );
 }

@@ -15,7 +15,7 @@ export default function ComprasScreen() {
   const sorted = [...purchases].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 
   return (
-    <ScreenContainer scroll={sorted.length > 0}>
+    <ScreenContainer floating={<FAB onPress={() => router.push('/compras/nueva')} />}>
       <ScreenHeader title="Compras" subtitle={`${purchases.length} registradas`} />
 
       {sorted.length === 0 ? (
@@ -44,8 +44,6 @@ export default function ComprasScreen() {
           ))}
         </View>
       )}
-
-      <FAB onPress={() => router.push('/compras/nueva')} />
     </ScreenContainer>
   );
 }

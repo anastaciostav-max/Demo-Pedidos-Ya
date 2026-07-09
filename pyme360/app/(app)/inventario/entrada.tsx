@@ -1,7 +1,8 @@
 import { useRouter } from 'expo-router';
 import { ChevronDown, Package } from 'lucide-react-native';
 import React, { useState } from 'react';
-import { Alert, Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { notify } from '@/lib/confirm';
 import { ProductPickerSheet } from '@/components/domain/ProductPickerSheet';
 import { AppText, Button, Card, Input, ScreenContainer, ScreenHeader, SegmentedControl } from '@/components/ui';
 import { useInventoryStore } from '@/stores/useInventoryStore';
@@ -25,8 +26,8 @@ export default function EntradaScreen() {
 
   function handleSubmit() {
     const qty = parseInt(quantity, 10);
-    if (!product) return Alert.alert('Selecciona un producto');
-    if (!qty || qty <= 0) return Alert.alert('Ingresa una cantidad válida');
+    if (!product) return notify('Selecciona un producto');
+    if (!qty || qty <= 0) return notify('Ingresa una cantidad válida');
     registerEntrada(product.id, qty, reason, note.trim() || undefined);
     router.back();
   }

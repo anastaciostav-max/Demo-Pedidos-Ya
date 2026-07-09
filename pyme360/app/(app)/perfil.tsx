@@ -1,8 +1,9 @@
 import { useRouter } from 'expo-router';
 import { Mail, Settings, ShieldCheck } from 'lucide-react-native';
 import React, { useState } from 'react';
-import { Alert, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { AppText, Avatar, Button, Card, Input, ScreenContainer, ScreenHeader } from '@/components/ui';
+import { confirmAction } from '@/lib/confirm';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { useBusinessStore } from '@/stores/useBusinessStore';
 import { palette, spacing } from '@/theme';
@@ -82,10 +83,9 @@ export default function PerfilScreen() {
         variant="ghost"
         fullWidth
         onPress={() =>
-          Alert.alert('Cerrar sesión', '¿Seguro que deseas salir?', [
-            { text: 'Cancelar', style: 'cancel' },
-            { text: 'Cerrar sesión', style: 'destructive', onPress: logout },
-          ])
+          confirmAction('Cerrar sesión', '¿Seguro que deseas salir?', 'Cerrar sesión', logout, {
+            destructive: true,
+          })
         }
         style={{ marginTop: spacing.sm }}
       />
