@@ -14,8 +14,12 @@ export default function RegisterScreen() {
   const [loading, setLoading] = useState(false);
 
   async function handleRegister() {
-    if (!name || !email || !password) {
+    if (!name.trim() || !email.trim() || !password) {
       setError('Completa todos los campos.');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      setError('Ingresa un correo electrónico válido.');
       return;
     }
     if (password.length < 6) {

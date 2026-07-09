@@ -25,7 +25,7 @@ import {
   topProducts,
   unitsSold,
 } from '@/lib/analytics';
-import { formatCurrency, formatNumber } from '@/lib/format';
+import { formatCurrency, formatCurrencyCompact, formatNumber } from '@/lib/format';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { useBusinessStore } from '@/stores/useBusinessStore';
 import { useClientStore } from '@/stores/useClientStore';
@@ -85,14 +85,14 @@ export default function DashboardScreen() {
           <StatCard
             icon={<DollarSign size={20} color={palette.blue600} />}
             label="Ventas del día"
-            value={formatCurrency(stats.todayTotal, business?.currency)}
+            value={formatCurrencyCompact(stats.todayTotal, business?.currency)}
           />
         </View>
         <View style={styles.tileFlex}>
           <StatCard
             icon={<TrendingUp size={20} color={palette.teal500} />}
             label="Ventas del mes"
-            value={formatCurrency(stats.monthTotal, business?.currency)}
+            value={formatCurrencyCompact(stats.monthTotal, business?.currency)}
             accentBg={palette.successBg}
           />
         </View>
@@ -100,7 +100,7 @@ export default function DashboardScreen() {
           <StatCard
             icon={<Wallet size={20} color={palette.blue600} />}
             label="Utilidad del mes"
-            value={formatCurrency(stats.profit, business?.currency)}
+            value={formatCurrencyCompact(stats.profit, business?.currency)}
           />
         </View>
         <View style={styles.tileFlex}>

@@ -7,6 +7,12 @@ export function formatCurrency(value: number, currency = 'USD'): string {
   })}`;
 }
 
+/** Rounded, no-decimals currency for tight spaces like dashboard stat tiles. */
+export function formatCurrencyCompact(value: number, currency = 'USD'): string {
+  const symbol = currency === 'USD' ? '$' : currency;
+  return `${symbol}${Math.round(value).toLocaleString('es-MX')}`;
+}
+
 export function formatNumber(value: number): string {
   return value.toLocaleString('es-MX');
 }
@@ -27,7 +33,7 @@ export function formatDateTime(iso: string): string {
 export function formatRelative(iso: string): string {
   const now = Date.now();
   const then = new Date(iso).getTime();
-  const diffMs = now - then;
+  const diffMs = Math.max(0, now - then);
   const minute = 60 * 1000;
   const hour = 60 * minute;
   const day = 24 * hour;

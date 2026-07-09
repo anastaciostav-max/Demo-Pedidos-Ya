@@ -16,12 +16,12 @@ interface StatCardProps {
 
 export function StatCard({ icon, label, value, accent = palette.blue600, accentBg = palette.infoBg, trend, compact }: StatCardProps) {
   return (
-    <Card style={[styles.card, compact && styles.compact]}>
+    <Card style={[styles.card, styles.compact, compact && styles.compact]}>
       <View style={[styles.iconWrap, { backgroundColor: accentBg }]}>{icon}</View>
-      <AppText variant="caption" style={styles.label} numberOfLines={1}>
+      <AppText variant="caption" style={styles.label} numberOfLines={2}>
         {label}
       </AppText>
-      <AppText variant="title" style={styles.value} numberOfLines={1}>
+      <AppText variant="title" style={styles.value} numberOfLines={2} adjustsFontSizeToFit minimumFontScale={0.75}>
         {value}
       </AppText>
       {trend && (
@@ -40,14 +40,14 @@ export function StatCard({ icon, label, value, accent = palette.blue600, accentB
 const styles = StyleSheet.create({
   card: {
     flex: 1,
-    minWidth: 150,
+    minWidth: 140,
   },
   compact: {
     padding: spacing.md,
   },
   iconWrap: {
-    width: 40,
-    height: 40,
+    width: 36,
+    height: 36,
     borderRadius: radius.md,
     alignItems: 'center',
     justifyContent: 'center',
@@ -57,6 +57,6 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   value: {
-    fontSize: 22,
+    fontSize: 19,
   },
 });

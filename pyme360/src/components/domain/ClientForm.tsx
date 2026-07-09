@@ -32,6 +32,13 @@ export function ClientForm({ initial, onSubmit, submitLabel }: ClientFormProps) 
 
   function handleSubmit() {
     if (!name.trim()) return setError('El nombre es obligatorio.');
+    if (email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      return setError('Ingresa un correo electrónico válido.');
+    }
+    const credit = parseFloat(creditLimit);
+    if (creditLimit.trim() && (Number.isNaN(credit) || credit < 0)) {
+      return setError('El límite de crédito no puede ser negativo.');
+    }
     setError(undefined);
     onSubmit({
       name: name.trim(),
@@ -40,7 +47,7 @@ export function ClientForm({ initial, onSubmit, submitLabel }: ClientFormProps) 
       address: address.trim() || undefined,
       taxId: taxId.trim() || undefined,
       notes: notes.trim() || undefined,
-      creditLimit: parseFloat(creditLimit) || 0,
+      creditLimit: Math.max(0, credit || 0),
     });
   }
 

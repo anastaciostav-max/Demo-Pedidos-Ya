@@ -30,6 +30,9 @@ export function SupplierForm({ initial, onSubmit, submitLabel }: SupplierFormPro
 
   function handleSubmit() {
     if (!name.trim()) return setError('El nombre es obligatorio.');
+    if (email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      return setError('Ingresa un correo electrónico válido.');
+    }
     setError(undefined);
     onSubmit({
       name: name.trim(),

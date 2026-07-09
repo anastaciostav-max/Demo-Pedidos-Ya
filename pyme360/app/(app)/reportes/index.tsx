@@ -15,7 +15,7 @@ import {
   unitsSold,
 } from '@/lib/analytics';
 import { buildCsv, shareCsv } from '@/lib/csv';
-import { formatCurrency, formatDate } from '@/lib/format';
+import { formatCurrency, formatCurrencyCompact, formatDate } from '@/lib/format';
 import { buildReportHtml, shareHtmlAsPdf } from '@/lib/pdf';
 import { useBusinessStore } from '@/stores/useBusinessStore';
 import { useProductStore } from '@/stores/useProductStore';
@@ -104,10 +104,10 @@ export default function ReportesScreen() {
       <SegmentedControl segments={PERIODS} value={period} onChange={setPeriod} scrollable />
 
       <View style={styles.statsGrid}>
-        <StatMini label="Ventas" value={formatCurrency(stats.total, business?.currency)} />
-        <StatMini label="Utilidad" value={formatCurrency(stats.profit, business?.currency)} />
+        <StatMini label="Ventas" value={formatCurrencyCompact(stats.total, business?.currency)} />
+        <StatMini label="Utilidad" value={formatCurrencyCompact(stats.profit, business?.currency)} />
         <StatMini label="Unidades" value={String(stats.units)} />
-        <StatMini label="Ticket prom." value={formatCurrency(stats.ticket, business?.currency)} />
+        <StatMini label="Ticket prom." value={formatCurrencyCompact(stats.ticket, business?.currency)} />
       </View>
 
       <Card style={{ marginTop: spacing.lg }}>

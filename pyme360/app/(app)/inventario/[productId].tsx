@@ -20,11 +20,14 @@ const REASON_LABEL: Record<string, string> = {
 export default function KardexScreen() {
   const { productId } = useLocalSearchParams<{ productId: string }>();
   const product = useProductStore((s) => s.products.find((p) => p.id === productId));
-  const movements = useInventoryStore((s) => s.movementsForProduct(productId));
+  const allMovements = useInventoryStore((s) => s.movements);
 
   const sorted = useMemo(
-    () => [...movements].sort((a, b) => b.createdAt.localeCompare(a.createdAt)),
-    [movements],
+    () =>
+      allMovements
+        .filter((m) => m.productId === productId)
+        .sort((a, b) => b.createdAt.localeCompare(a.createdAt)),
+    [allMovements, productId],
   );
 
   return (

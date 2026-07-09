@@ -14,6 +14,7 @@ export default function ConfiguracionScreen() {
   const [phone, setPhone] = useState(business?.phone ?? '');
   const [ivaRate, setIvaRate] = useState(business ? String(business.ivaRate * 100) : '16');
   const [saved, setSaved] = useState(false);
+  const [error, setError] = useState<string | undefined>();
 
   const [notifLowStock, setNotifLowStock] = useState(true);
   const [notifOrders, setNotifOrders] = useState(true);
@@ -31,14 +32,25 @@ export default function ConfiguracionScreen() {
         <Input label="Dirección" value={address} onChangeText={setAddress} containerStyle={{ marginBottom: spacing.sm }} />
         <Input label="Teléfono" keyboardType="phone-pad" value={phone} onChangeText={setPhone} containerStyle={{ marginBottom: spacing.sm }} />
         <Input label="IVA (%)" keyboardType="decimal-pad" value={ivaRate} onChangeText={setIvaRate} containerStyle={{ marginBottom: spacing.sm }} />
+        {error && (
+          <AppText variant="caption" color={palette.danger} style={{ marginBottom: spacing.sm }}>
+            {error}
+          </AppText>
+        )}
         <Button
           label={saved ? 'Guardado ✓' : 'Guardar cambios'}
           onPress={() => {
+            if (!name.trim()) return setError('El nombre del negocio es obligatorio.');
+            const iva = parseFloat(ivaRate);
+            if (ivaRate.trim() && (Number.isNaN(iva) || iva < 0 || iva > 100)) {
+              return setError('El IVA debe ser un porcentaje entre 0 y 100.');
+            }
+            setError(undefined);
             updateBusiness({
-              name,
+              name: name.trim(),
               address,
               phone,
-              ivaRate: (parseFloat(ivaRate) || 0) / 100,
+              ivaRate: Math.max(0, Math.min(100, iva || 0)) / 100,
             });
             setSaved(true);
             setTimeout(() => setSaved(false), 1500);

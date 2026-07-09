@@ -30,6 +30,14 @@ const daysAgo = (n: number, hour = 9) => {
   const d = new Date();
   d.setHours(hour, int(0, 59), 0, 0);
   d.setDate(d.getDate() - n);
+  // Never generate a timestamp in the future (e.g. n=0 with an hour later
+  // than the current one) — clamp it to a few minutes before "now" instead,
+  // otherwise relative-time labels like "ahora mismo" apply to every
+  // future-dated row.
+  const now = Date.now();
+  if (d.getTime() > now) {
+    d.setTime(now - int(1, 45) * 60 * 1000);
+  }
   return d.toISOString();
 };
 

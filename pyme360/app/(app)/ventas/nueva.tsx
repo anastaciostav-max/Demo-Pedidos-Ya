@@ -36,7 +36,7 @@ export default function NuevaVentaScreen() {
   const totals = useMemo(() => {
     const subtotal = items.reduce((s, it) => s + it.unitPrice * it.quantity, 0);
     const itemDiscounts = items.reduce((s, it) => s + it.discount, 0);
-    const globalDiscount = parseFloat(discount) || 0;
+    const globalDiscount = Math.max(0, parseFloat(discount) || 0);
     const totalDiscount = itemDiscounts + globalDiscount;
     const taxable = Math.max(0, subtotal - totalDiscount);
     const iva = taxable * ivaRate;
@@ -59,7 +59,7 @@ export default function NuevaVentaScreen() {
       clientId: client?.id,
       clientName: client?.name ?? 'Público General',
       items,
-      discount: parseFloat(discount) || 0,
+      discount: Math.max(0, parseFloat(discount) || 0),
       ivaRate,
       paymentMethod,
     });

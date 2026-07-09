@@ -32,8 +32,8 @@ export const useSaleStore = create<SaleState>()(
       seed: (sales) => set({ sales }),
       addSale: (input) => {
         const subtotal = input.items.reduce((s, it) => s + it.unitPrice * it.quantity, 0);
-        const itemDiscounts = input.items.reduce((s, it) => s + it.discount, 0);
-        const totalDiscount = itemDiscounts + input.discount;
+        const itemDiscounts = input.items.reduce((s, it) => s + Math.max(0, it.discount), 0);
+        const totalDiscount = itemDiscounts + Math.max(0, input.discount);
         const taxableBase = Math.max(0, subtotal - totalDiscount);
         const iva = Math.round(taxableBase * input.ivaRate * 100) / 100;
         const total = Math.round((taxableBase + iva) * 100) / 100;

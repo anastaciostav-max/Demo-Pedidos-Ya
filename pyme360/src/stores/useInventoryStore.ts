@@ -13,12 +13,11 @@ interface InventoryState {
   registerEntrada: (productId: string, quantity: number, reason: MovementReason, note?: string) => void;
   registerSalida: (productId: string, quantity: number, reason: MovementReason, note?: string) => void;
   registerAjuste: (productId: string, newStock: number, note?: string) => void;
-  movementsForProduct: (productId: string) => InventoryMovement[];
 }
 
 export const useInventoryStore = create<InventoryState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       movements: [],
       hasHydrated: false,
       setHasHydrated: (v) => set({ hasHydrated: v }),
@@ -65,7 +64,6 @@ export const useInventoryStore = create<InventoryState>()(
         };
         set((s) => ({ movements: [movement, ...s.movements] }));
       },
-      movementsForProduct: (productId) => get().movements.filter((m) => m.productId === productId),
     }),
     {
       name: STORAGE_KEYS.inventory,

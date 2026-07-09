@@ -19,6 +19,7 @@ export default function PerfilScreen() {
 
   const [name, setName] = useState(currentUser?.name ?? '');
   const [saved, setSaved] = useState(false);
+  const [error, setError] = useState<string | undefined>();
 
   return (
     <ScreenContainer>
@@ -59,10 +60,17 @@ export default function PerfilScreen() {
       </AppText>
       <Card>
         <Input label="Nombre completo" value={name} onChangeText={setName} containerStyle={{ marginBottom: spacing.sm }} />
+        {error && (
+          <AppText variant="caption" color={palette.danger} style={{ marginBottom: spacing.sm }}>
+            {error}
+          </AppText>
+        )}
         <Button
           label={saved ? 'Guardado ✓' : 'Guardar cambios'}
           onPress={() => {
-            updateCurrentUser({ name });
+            if (!name.trim()) return setError('El nombre no puede estar vacío.');
+            setError(undefined);
+            updateCurrentUser({ name: name.trim() });
             setSaved(true);
             setTimeout(() => setSaved(false), 1500);
           }}

@@ -58,6 +58,18 @@ export function ProductForm({ initial, onSubmit, submitLabel }: ProductFormProps
     if (!categoryId) return setError('Selecciona una categoría.');
     const sp = parseFloat(salePrice);
     if (!sp || sp <= 0) return setError('Ingresa un precio de venta válido.');
+    const pp = parseFloat(purchasePrice);
+    if (purchasePrice.trim() && (Number.isNaN(pp) || pp < 0)) {
+      return setError('El precio de compra no puede ser negativo.');
+    }
+    const stockValue = parseInt(stock, 10);
+    if (stock.trim() && (Number.isNaN(stockValue) || stockValue < 0)) {
+      return setError('El stock no puede ser negativo.');
+    }
+    const minStockValue = parseInt(minStock, 10);
+    if (minStock.trim() && (Number.isNaN(minStockValue) || minStockValue < 0)) {
+      return setError('El stock mínimo no puede ser negativo.');
+    }
     setError(undefined);
     onSubmit({
       name: name.trim(),
@@ -65,10 +77,10 @@ export function ProductForm({ initial, onSubmit, submitLabel }: ProductFormProps
       sku: sku.trim() || `SKU-${Date.now().toString().slice(-6)}`,
       categoryId,
       brand: brand.trim(),
-      purchasePrice: parseFloat(purchasePrice) || 0,
+      purchasePrice: Math.max(0, pp || 0),
       salePrice: sp,
-      stock: parseInt(stock, 10) || 0,
-      minStock: parseInt(minStock, 10) || 0,
+      stock: Math.max(0, stockValue || 0),
+      minStock: Math.max(0, minStockValue || 0),
       unit: unit.trim() || 'pza',
     });
   }
