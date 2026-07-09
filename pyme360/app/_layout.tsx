@@ -9,13 +9,14 @@ import {
 import { Stack, useRouter, useSegments } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Platform, StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { AppText } from '@/components/ui/AppText';
 import { Logo } from '@/components/ui/Logo';
 import { useAppReady } from '@/lib/useAppReady';
 import { useAuthStore } from '@/stores/useAuthStore';
-import { palette, WEB_CONTAINER_MAX_WIDTH } from '@/theme';
+import { palette, spacing, WEB_CONTAINER_MAX_WIDTH } from '@/theme';
 
 /** On web, keeps the app phone-width and centered instead of stretching across a wide browser window. */
 function WebFrame({ children }: { children: React.ReactNode }) {
@@ -66,7 +67,11 @@ export default function RootLayout() {
     return (
       <WebFrame>
         <View style={styles.loading}>
-          <Logo size={88} />
+          <Logo size={96} />
+          <ActivityIndicator color={palette.blue600} style={styles.loadingSpinner} />
+          <AppText variant="captionMedium" style={styles.loadingLabel}>
+            Cargando…
+          </AppText>
         </View>
       </WebFrame>
     );
@@ -92,6 +97,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: palette.gray50,
+  },
+  loadingSpinner: {
+    marginTop: spacing.lg,
+  },
+  loadingLabel: {
+    marginTop: spacing.sm,
   },
   webOuter: {
     flex: 1,
