@@ -1,6 +1,7 @@
-import { Barcode, Package, Plus, Tag } from 'lucide-react-native';
+import { Barcode, Plus, Tag } from 'lucide-react-native';
 import React, { useMemo, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
+import { PhotoPicker } from '@/components/domain/PhotoPicker';
 import { AppText, Button, Card, Input } from '@/components/ui';
 import { formatCurrency } from '@/lib/format';
 import { useProductStore } from '@/stores/useProductStore';
@@ -19,11 +20,12 @@ export interface ProductFormInitial {
   stock?: number;
   minStock?: number;
   unit?: string;
+  photoUri?: string;
 }
 
 interface ProductFormProps {
   initial?: ProductFormInitial;
-  onSubmit: (values: Omit<Product, 'id' | 'createdAt' | 'updatedAt' | 'active' | 'photoUri'>) => void;
+  onSubmit: (values: Omit<Product, 'id' | 'createdAt' | 'updatedAt' | 'active'>) => void;
   submitLabel: string;
 }
 
@@ -42,6 +44,7 @@ export function ProductForm({ initial, onSubmit, submitLabel }: ProductFormProps
   const [stock, setStock] = useState(initial?.stock !== undefined ? String(initial.stock) : '0');
   const [minStock, setMinStock] = useState(initial?.minStock !== undefined ? String(initial.minStock) : '5');
   const [unit, setUnit] = useState(initial?.unit ?? 'pza');
+  const [photoUri, setPhotoUri] = useState(initial?.photoUri);
   const [newCategory, setNewCategory] = useState('');
   const [showNewCategory, setShowNewCategory] = useState(false);
   const [error, setError] = useState<string | undefined>();
@@ -82,18 +85,14 @@ export function ProductForm({ initial, onSubmit, submitLabel }: ProductFormProps
       stock: Math.max(0, stockValue || 0),
       minStock: Math.max(0, minStockValue || 0),
       unit: unit.trim() || 'pza',
+      photoUri,
     });
   }
 
   return (
     <View>
       <Card style={styles.photoCard}>
-        <View style={styles.photoPlaceholder}>
-          <Package size={28} color={palette.gray400} />
-        </View>
-        <AppText variant="caption" style={{ marginTop: spacing.xs }}>
-          Foto del producto (próximamente)
-        </AppText>
+        <PhotoPicker uri={photoUri} onChange={setPhotoUri} />
       </Card>
 
       <Input label="Nombre del producto" placeholder="Ej. Agua Mineral 600ml" value={name} onChangeText={setName} containerStyle={styles.field} />
@@ -208,14 +207,6 @@ const styles = StyleSheet.create({
   photoCard: {
     alignItems: 'center',
     marginBottom: spacing.lg,
-  },
-  photoPlaceholder: {
-    width: 72,
-    height: 72,
-    borderRadius: radius.lg,
-    backgroundColor: palette.gray50,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   field: {
     marginTop: spacing.sm,

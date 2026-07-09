@@ -67,6 +67,7 @@ export default function ProductoDetailScreen() {
           stock: product.stock,
           minStock: product.minStock,
           unit: product.unit,
+          photoUri: product.photoUri,
         }}
         onSubmit={(values) => {
           updateProduct(product.id, values);

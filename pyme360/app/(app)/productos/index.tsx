@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 import { Package } from 'lucide-react-native';
 import React, { useMemo, useState } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Image, Pressable, StyleSheet, View } from 'react-native';
 import {
   AppText,
   Badge,
@@ -66,7 +66,11 @@ export default function ProductosScreen() {
               <Pressable key={p.id} onPress={() => router.push(`/productos/${p.id}`)}>
                 <Card style={styles.row}>
                   <View style={styles.thumb}>
-                    <Package size={22} color={palette.gray400} />
+                    {p.photoUri ? (
+                      <Image source={{ uri: p.photoUri }} style={styles.thumbImage} />
+                    ) : (
+                      <Package size={22} color={palette.gray400} />
+                    )}
                   </View>
                   <View style={{ flex: 1, minWidth: 0 }}>
                     <AppText variant="bodySemibold" numberOfLines={1}>
@@ -113,6 +117,11 @@ const styles = StyleSheet.create({
     backgroundColor: palette.gray50,
     alignItems: 'center',
     justifyContent: 'center',
+    overflow: 'hidden',
+  },
+  thumbImage: {
+    width: 48,
+    height: 48,
   },
   metaRow: {
     flexDirection: 'row',

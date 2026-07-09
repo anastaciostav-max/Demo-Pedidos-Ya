@@ -45,6 +45,13 @@
         }
       ],
       [
+        "expo-image-picker",
+        {
+          "photosPermission": "Pyme360 usa tus fotos para agregar imágenes de productos.",
+          "cameraPermission": "Pyme360 usa la cámara para tomar fotos de productos."
+        }
+      ],
+      [
         "expo-splash-screen",
         {
           "image": "./assets/icon.png",
