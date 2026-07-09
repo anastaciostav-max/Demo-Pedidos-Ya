@@ -62,7 +62,7 @@ export default function RootLayout() {
   // makes the loading screen flash invisibly. Force it to stay up briefly so
   // the logo + "Cargando…" is always perceptible.
   useEffect(() => {
-    const timer = setTimeout(() => setMinTimeElapsed(true), 700);
+    const timer = setTimeout(() => setMinTimeElapsed(true), 1400);
     return () => clearTimeout(timer);
   }, []);
 
@@ -78,7 +78,7 @@ export default function RootLayout() {
     return (
       <WebFrame>
         <View style={styles.loading}>
-          <Logo size={96} />
+          <Logo size={140} />
           <View style={styles.loadingSpinner}>
             <LoadingBar width={120} />
           </View>

@@ -34,7 +34,7 @@ let html = fs.readFileSync(indexPath, 'utf8');
 function findBundledLogoPath() {
   const assetsDir = path.join(distDir, 'assets', 'assets');
   if (!fs.existsSync(assetsDir)) return null;
-  const match = fs.readdirSync(assetsDir).find((f) => /^logo\..*\.png$/.test(f));
+  const match = fs.readdirSync(assetsDir).find((f) => /^logo-transparent\..*\.png$/.test(f));
   return match ? `assets/assets/${match}` : null;
 }
 
@@ -52,8 +52,8 @@ const splashCss = `
       z-index: 0;
     }
     #root-splash img {
-      width: 96px;
-      height: 96px;
+      width: 150px;
+      height: 144px;
       object-fit: contain;
     }
     #root-splash .bar-track {
