@@ -2,7 +2,7 @@ import { X } from 'lucide-react-native';
 import React from 'react';
 import { Modal, Pressable, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { palette, radius, spacing } from '@/theme';
+import { palette, radius, spacing, WEB_CONTAINER_MAX_WIDTH } from '@/theme';
 import { AppText } from './AppText';
 import { IconButton } from './IconButton';
 
@@ -49,6 +49,9 @@ const styles = StyleSheet.create({
     maxHeight: '86%',
     paddingHorizontal: spacing.lg,
     paddingBottom: spacing.lg,
+    width: '100%',
+    maxWidth: WEB_CONTAINER_MAX_WIDTH,
+    alignSelf: 'center',
   },
   handle: {
     width: 40,

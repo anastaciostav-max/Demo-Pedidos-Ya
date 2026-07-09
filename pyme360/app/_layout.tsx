@@ -9,13 +9,23 @@ import {
 import { Stack, useRouter, useSegments } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Logo } from '@/components/ui/Logo';
 import { useAppReady } from '@/lib/useAppReady';
 import { useAuthStore } from '@/stores/useAuthStore';
-import { palette } from '@/theme';
+import { palette, WEB_CONTAINER_MAX_WIDTH } from '@/theme';
+
+/** On web, keeps the app phone-width and centered instead of stretching across a wide browser window. */
+function WebFrame({ children }: { children: React.ReactNode }) {
+  if (Platform.OS !== 'web') return <>{children}</>;
+  return (
+    <View style={styles.webOuter}>
+      <View style={styles.webInner}>{children}</View>
+    </View>
+  );
+}
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
@@ -54,21 +64,25 @@ export default function RootLayout() {
 
   if (!ready) {
     return (
-      <View style={styles.loading}>
-        <Logo size={88} />
-      </View>
+      <WebFrame>
+        <View style={styles.loading}>
+          <Logo size={88} />
+        </View>
+      </WebFrame>
     );
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaProvider>
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="(auth)" />
-          <Stack.Screen name="(app)" />
-        </Stack>
-      </SafeAreaProvider>
-    </GestureHandlerRootView>
+    <WebFrame>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <SafeAreaProvider>
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="(auth)" />
+            <Stack.Screen name="(app)" />
+          </Stack>
+        </SafeAreaProvider>
+      </GestureHandlerRootView>
+    </WebFrame>
   );
 }
 
@@ -78,5 +92,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: palette.gray50,
+  },
+  webOuter: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: palette.gray200,
+  },
+  webInner: {
+    flex: 1,
+    width: '100%',
+    maxWidth: WEB_CONTAINER_MAX_WIDTH,
+    boxShadow: '0 0 0 1px rgba(11,27,63,0.06), 0 24px 48px rgba(11,27,63,0.12)',
   },
 });
