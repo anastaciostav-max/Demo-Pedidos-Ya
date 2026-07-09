@@ -52,14 +52,14 @@ const splashCss = `
       z-index: 0;
     }
     #root-splash img {
-      width: 150px;
-      height: 144px;
+      width: 220px;
+      height: 211px;
       object-fit: contain;
     }
     #root-splash .bar-track {
-      width: 120px;
+      width: 160px;
       height: 4px;
-      margin-top: 24px;
+      margin-top: 28px;
       border-radius: 999px;
       background: #E7ECF3;
       overflow: hidden;
@@ -79,8 +79,8 @@ const splashCss = `
       color: #8A96AC;
     }
     @keyframes root-splash-slide {
-      0% { transform: translateX(-120px); }
-      100% { transform: translateX(120px); }
+      0% { transform: translateX(-160px); }
+      100% { transform: translateX(160px); }
     }`;
 
 function splashHtml(bundledLogoPath) {

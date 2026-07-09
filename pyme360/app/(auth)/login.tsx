@@ -42,7 +42,7 @@ export default function LoginScreen() {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.brandBlock}>
-          <Logo size={128} />
+          <Logo size={168} />
           <AppText variant="headline" style={styles.tagline}>
             Tu negocio, 360° bajo control
           </AppText>
