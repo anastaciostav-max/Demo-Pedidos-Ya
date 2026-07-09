@@ -79,7 +79,7 @@ const splashCss = `
 function splashHtml(bundledLogoPath) {
   return `
     <div id="root-splash">
-      <img src="/Demo-Pedidos-Ya/${bundledLogoPath}" alt="Pyme360" />
+      <img src="/Pymes360/${bundledLogoPath}" alt="Pyme360" />
       <div class="spinner"></div>
       <div class="label">Cargando…</div>
     </div>`;
@@ -88,13 +88,13 @@ function splashHtml(bundledLogoPath) {
 const headInjection = `
     <meta name="description" content="Pyme360 — Tu negocio, 360° bajo control" />
     <meta name="theme-color" content="#0B7CF6" />
-    <link rel="manifest" href="/Demo-Pedidos-Ya/manifest.json" />
+    <link rel="manifest" href="/Pymes360/manifest.json" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Pyme360" />
-    <link rel="apple-touch-icon" href="/Demo-Pedidos-Ya/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/Demo-Pedidos-Ya/favicon-32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/Demo-Pedidos-Ya/favicon-16.png" />
+    <link rel="apple-touch-icon" href="/Pymes360/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/Pymes360/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/Pymes360/favicon-16.png" />
   </head>`;
 
 if (!html.includes('rel="manifest"')) {

@@ -56,7 +56,7 @@
     ],
     "experiments": {
       "typedRoutes": true,
-      "baseUrl": "/Demo-Pedidos-Ya"
+      "baseUrl": "/Pymes360"
     }
   }
 }
