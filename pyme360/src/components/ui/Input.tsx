@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, TextInput, TextInputProps, View } from 'react-native';
+import { Platform, StyleSheet, TextInput, TextInputProps, View } from 'react-native';
 import { palette, radius, spacing, typography } from '@/theme';
 import { AppText } from './AppText';
 
@@ -76,7 +76,9 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 50,
     fontFamily: typography.fontFamily.medium,
-    fontSize: typography.size.base,
+    // iOS Safari auto-zooms the page on focus for any input under 16px, and the
+    // zoom sticks around — keep this at/above 16px on web to avoid that.
+    fontSize: Platform.OS === 'web' ? 16 : typography.size.base,
     color: palette.navy900,
   },
   errorText: {

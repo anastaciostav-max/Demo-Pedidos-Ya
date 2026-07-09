@@ -1,6 +1,6 @@
 import { Search, X } from 'lucide-react-native';
 import React from 'react';
-import { Pressable, StyleSheet, TextInput, View } from 'react-native';
+import { Platform, Pressable, StyleSheet, TextInput, View } from 'react-native';
 import { palette, radius, spacing, typography } from '@/theme';
 
 interface SearchBarProps {
@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     fontFamily: typography.fontFamily.medium,
-    fontSize: typography.size.base,
+    // Keep at/above 16px on web so iOS Safari doesn't auto-zoom on focus.
+    fontSize: Platform.OS === 'web' ? 16 : typography.size.base,
     color: palette.navy900,
     height: '100%',
   },
