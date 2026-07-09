@@ -1,17 +1,19 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { Link } from 'expo-router';
-import { Lock, Mail, Sparkles } from 'lucide-react-native';
+import { Eye, EyeOff, Lock, Mail, ShieldCheck, Sparkles } from 'lucide-react-native';
 import React, { useState } from 'react';
-import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { AppText, Button, Input, Logo } from '@/components/ui';
 import { DEMO_CREDENTIALS } from '@/lib/bootstrap';
+import { notify } from '@/lib/confirm';
 import { useAuthStore } from '@/stores/useAuthStore';
-import { gradients, palette, spacing } from '@/theme';
+import { gradients, palette, radius, shadow, spacing } from '@/theme';
 
 export default function LoginScreen() {
   const login = useAuthStore((s) => s.login);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | undefined>();
   const [loading, setLoading] = useState(false);
 
@@ -30,27 +32,34 @@ export default function LoginScreen() {
   }
 
   return (
-    <View style={styles.container}>
-      <LinearGradient colors={gradients.hero} style={styles.hero}>
-        <View style={styles.logoWrap}>
-          <Logo size={104} />
-        </View>
-        <AppText variant="title" color={palette.white} style={styles.tagline}>
-          Tu negocio, 360° bajo control
-        </AppText>
-      </LinearGradient>
-
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        style={styles.formWrap}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      style={styles.container}
+    >
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
       >
+        <View style={styles.brandBlock}>
+          <Logo size={84} />
+          <AppText variant="headline" style={styles.tagline}>
+            Tu negocio, 360° bajo control
+          </AppText>
+        </View>
+
         <View style={styles.card}>
-          <AppText variant="headline" style={{ marginBottom: spacing.xs }}>
-            Inicia sesión
-          </AppText>
-          <AppText variant="body" style={{ marginBottom: spacing.lg }}>
-            Administra tu negocio desde cualquier lugar.
-          </AppText>
+          <View style={styles.cardHeader}>
+            <LinearGradient colors={gradients.brand} style={styles.iconBadge}>
+              <ShieldCheck size={20} color={palette.white} />
+            </LinearGradient>
+            <View style={styles.cardHeaderText}>
+              <AppText variant="headline">Iniciar sesión</AppText>
+              <AppText variant="caption">Ingresa tus credenciales para continuar</AppText>
+            </View>
+          </View>
+
+          <View style={styles.divider} />
 
           <Input
             label="Correo electrónico"
@@ -65,13 +74,33 @@ export default function LoginScreen() {
           <Input
             label="Contraseña"
             placeholder="••••••••"
-            secureTextEntry
+            secureTextEntry={!showPassword}
             value={password}
             onChangeText={setPassword}
             leftIcon={<Lock size={18} color={palette.gray400} />}
+            rightIcon={
+              <Pressable onPress={() => setShowPassword((v) => !v)} hitSlop={8}>
+                {showPassword ? (
+                  <EyeOff size={18} color={palette.gray400} />
+                ) : (
+                  <Eye size={18} color={palette.gray400} />
+                )}
+              </Pressable>
+            }
           />
+
+          <Pressable
+            onPress={() => notify('Recuperar contraseña', 'Esta es una demo local sin servidor: pedile a tu administrador que revise tu cuenta o creá una nueva.')}
+            hitSlop={8}
+            style={styles.forgotWrap}
+          >
+            <AppText variant="captionMedium" color={palette.blue600}>
+              ¿Olvidaste tu contraseña?
+            </AppText>
+          </Pressable>
+
           {error && (
-            <AppText variant="caption" color={palette.danger} style={{ marginTop: spacing.xs }}>
+            <AppText variant="caption" color={palette.danger} style={{ marginBottom: spacing.xs }}>
               {error}
             </AppText>
           )}
@@ -81,7 +110,6 @@ export default function LoginScreen() {
             onPress={() => handleLogin()}
             loading={loading}
             fullWidth
-            style={{ marginTop: spacing.lg }}
           />
 
           <Button
@@ -106,48 +134,72 @@ export default function LoginScreen() {
             </Link>
           </View>
         </View>
-      </KeyboardAvoidingView>
-    </View>
+
+        <AppText variant="caption" style={styles.copyright}>
+          © {new Date().getFullYear()} Pyme360 — Todos los derechos reservados
+        </AppText>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: palette.white,
+    backgroundColor: palette.gray50,
   },
-  hero: {
-    height: '38%',
-    alignItems: 'center',
+  scrollContent: {
+    flexGrow: 1,
     justifyContent: 'center',
-    borderBottomLeftRadius: 32,
-    borderBottomRightRadius: 32,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.xxl,
   },
-  logoWrap: {
-    backgroundColor: palette.white,
-    borderRadius: 28,
-    padding: spacing.md,
-    marginBottom: spacing.md,
+  brandBlock: {
+    alignItems: 'center',
+    marginBottom: spacing.xl,
   },
   tagline: {
-    paddingHorizontal: spacing.xl,
+    marginTop: spacing.sm,
     textAlign: 'center',
   },
-  formWrap: {
+  card: {
+    backgroundColor: palette.white,
+    borderRadius: radius.xl,
+    padding: spacing.xl,
+    ...shadow.lg,
+  },
+  cardHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
+  },
+  iconBadge: {
+    width: 44,
+    height: 44,
+    borderRadius: radius.md,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cardHeaderText: {
     flex: 1,
   },
-  card: {
-    flex: 1,
-    marginTop: -28,
-    backgroundColor: palette.white,
-    borderTopLeftRadius: 28,
-    borderTopRightRadius: 28,
-    paddingHorizontal: spacing.xl,
-    paddingTop: spacing.xl,
+  divider: {
+    height: 1,
+    backgroundColor: palette.gray100,
+    marginVertical: spacing.lg,
+  },
+  forgotWrap: {
+    alignSelf: 'flex-end',
+    marginBottom: spacing.md,
+    marginTop: -spacing.xxs,
   },
   footer: {
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: spacing.lg,
+  },
+  copyright: {
+    textAlign: 'center',
+    marginTop: spacing.xl,
   },
 });

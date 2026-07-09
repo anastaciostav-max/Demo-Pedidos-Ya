@@ -9,6 +9,7 @@ export * from './FAB';
 export * from './IconButton';
 export * from './Input';
 export * from './ListRow';
+export * from './LoadingBar';
 export * from './Logo';
 export * from './ScreenContainer';
 export * from './ScreenHeader';

@@ -4,7 +4,7 @@
  * generic SPA template, so app/+html.tsx is never invoked) with:
  *  - PWA <head> tags (manifest, apple touch icon, theme color) so the app
  *    can be added to a phone home screen.
- *  - a static HTML/CSS splash (logo + spinner + "Cargando…") rendered inside
+ *  - a static HTML/CSS splash (logo + loading bar + "Cargando…") rendered inside
  *    #root, visible the instant index.html parses — before the ~4MB JS
  *    bundle finishes downloading/executing. React's createRoot() replaces
  *    #root's children on mount, so this is swapped out for the real app
@@ -56,14 +56,20 @@ const splashCss = `
       height: 96px;
       object-fit: contain;
     }
-    #root-splash .spinner {
-      width: 22px;
-      height: 22px;
+    #root-splash .bar-track {
+      width: 120px;
+      height: 4px;
       margin-top: 24px;
-      border-radius: 50%;
-      border: 3px solid rgba(11, 124, 246, 0.2);
-      border-top-color: #0B7CF6;
-      animation: root-splash-spin 0.8s linear infinite;
+      border-radius: 999px;
+      background: #E7ECF3;
+      overflow: hidden;
+    }
+    #root-splash .bar-fill {
+      width: 45%;
+      height: 100%;
+      border-radius: 999px;
+      background: #0B7CF6;
+      animation: root-splash-slide 1.1s ease-in-out infinite;
     }
     #root-splash .label {
       margin-top: 12px;
@@ -72,15 +78,16 @@ const splashCss = `
       font-weight: 500;
       color: #8A96AC;
     }
-    @keyframes root-splash-spin {
-      to { transform: rotate(360deg); }
+    @keyframes root-splash-slide {
+      0% { transform: translateX(-120px); }
+      100% { transform: translateX(120px); }
     }`;
 
 function splashHtml(bundledLogoPath) {
   return `
     <div id="root-splash">
       <img src="/Pymes360/${bundledLogoPath}" alt="Pyme360" />
-      <div class="spinner"></div>
+      <div class="bar-track"><div class="bar-fill"></div></div>
       <div class="label">Cargando…</div>
     </div>`;
 }

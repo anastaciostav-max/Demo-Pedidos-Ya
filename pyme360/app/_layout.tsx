@@ -9,10 +9,11 @@ import {
 import { Stack, useRouter, useSegments } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect } from 'react';
-import { ActivityIndicator, Platform, StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AppText } from '@/components/ui/AppText';
+import { LoadingBar } from '@/components/ui/LoadingBar';
 import { Logo } from '@/components/ui/Logo';
 import { useAppReady } from '@/lib/useAppReady';
 import { useAuthStore } from '@/stores/useAuthStore';
@@ -68,7 +69,9 @@ export default function RootLayout() {
       <WebFrame>
         <View style={styles.loading}>
           <Logo size={96} />
-          <ActivityIndicator color={palette.blue600} style={styles.loadingSpinner} />
+          <View style={styles.loadingSpinner}>
+            <LoadingBar width={120} />
+          </View>
           <AppText variant="captionMedium" style={styles.loadingLabel}>
             Cargando…
           </AppText>
