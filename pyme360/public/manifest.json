@@ -1,0 +1,31 @@
+{
+  "name": "Pyme360",
+  "short_name": "Pyme360",
+  "description": "Tu negocio, 360° bajo control",
+  "start_url": "/Pymes360/",
+  "scope": "/Pymes360/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F5F8FC",
+  "theme_color": "#0B7CF6",
+  "icons": [
+    {
+      "src": "/Pymes360/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/Pymes360/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/Pymes360/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

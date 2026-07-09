@@ -1,0 +1,69 @@
+{
+  "expo": {
+    "name": "Pyme360",
+    "slug": "pyme360",
+    "scheme": "pyme360",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "backgroundColor": "#F5F8FC",
+    "splash": {
+      "image": "./assets/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#F5F8FC"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.pyme360.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Pyme360 usa la cámara para escanear códigos de barras de productos."
+      }
+    },
+    "android": {
+      "package": "com.pyme360.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#F5F8FC",
+        "foregroundImage": "./assets/icon.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "permissions": ["CAMERA"]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro",
+      "output": "single"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Pyme360 usa la cámara para escanear códigos de barras de productos."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Pyme360 usa tus fotos para agregar imágenes de productos.",
+          "cameraPermission": "Pyme360 usa la cámara para tomar fotos de productos."
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/icon.png",
+          "imageWidth": 160,
+          "resizeMode": "contain",
+          "backgroundColor": "#F5F8FC"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "baseUrl": "/Pymes360"
+    }
+  }
+}
